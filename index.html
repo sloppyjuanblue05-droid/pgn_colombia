@@ -336,12 +336,12 @@ function trail(tx,ty,done){
   g.innerHTML='<circle r="5"/><path d="M-3.6-3.6L3.6 3.6M3.6-3.6L-3.6 3.6"/>';done()},k*28+300)}
 function chests(){
  $('ban2').textContent='Número '+names[cur]+', ¡elige tu cofre!';$('who2').textContent='🎯 Turno del número '+names[cur];
- ctype=shuf([1,1,0,0]);$('ne').hidden=true;$('qc').className='card';$('ch').className='chests';
- $('ch').innerHTML=[1,2,3,4].map(k=>'<button class="chest" onclick="openC(this)">'+chestSVG()+'Cofre '+k+'</button>').join('');show('s2')}
+ ctype=shuf([1,1,0]);$('ne').hidden=true;$('qc').className='card';$('ch').className='chests';
+ $('ch').innerHTML=[1,2,3].map(k=>'<button class="chest" onclick="openC(this)">'+chestSVG()+'Cofre '+k+'</button>').join('');show('s2')}
 var ctype;
 function burst(b,em,n=18){for(let i=0;i<n;i++){const s=document.createElement('span');s.className='sp';s.textContent=em[rnd(em.length)];
  s.style.setProperty('--dx',(rnd(361)-180)+'px');s.style.setProperty('--dy',-(60+rnd(200))+'px');s.style.animationDelay=(rnd(300))+'ms';b.appendChild(s)}}
-function splash(x,y,em){const d=document.createElement('div');d.style.cssText='position:fixed;z-index:60;left:'+x+'px;top:'+y+'px';document.body.appendChild(d);burst(d,em||['💦','🫧'],8);setTimeout(()=>d.remove(),2200)}
+function splash(x,y,em){const d=document.createElement('div');d.style.cssText='position:fixed;z-index:60;left:'+x+'px;top:'+y+'px';document.body.appendChild(d);burst(d,em||['💦','💧'],8);setTimeout(()=>d.remove(),2200)}
 const bez=(a,b,c,d,n)=>{const o=[];for(let i=0;i<=n;i++){const t=i/n,u=1-t;o.push([u*u*u*a[0]+3*u*u*t*b[0]+3*u*t*t*c[0]+t*t*t*d[0],u*u*u*a[1]+3*u*u*t*b[1]+3*u*t*t*c[1]+t*t*t*d[1]])}return o};
 function tent(A,B,C,D,W,sg){
  const P=bez(A,B,C,D,30),e=P[30],q=P[29];let dx=e[0]-q[0],dy=e[1]-q[1];const l=Math.hypot(dx,dy)||1;dx/=l;dy/=l;
