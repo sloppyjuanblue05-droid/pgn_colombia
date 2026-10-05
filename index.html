@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><title>El Tesoro del PGN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Lora:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--gold:#f2c14e;--ink:#3a2410;--bad:#d64541;--ok:#2f9e63;--t:"Pirata One","Palatino Linotype",Georgia,serif;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;padding:14px 14px 90px;color:#fff;font-family:Lora,Georgia,serif;background:#082635;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 50% -10%,#1d7a94 0,#0f4a63 45%,#082635 100%)}
+.waves{position:fixed;left:-400px;right:0;bottom:0;height:70px;pointer-events:none;opacity:.3;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='70'><path d='M0 35Q50 5 100 35T200 35T300 35T400 35V70H0Z' fill='white'/></svg>") repeat-x;background-size:400px 70px;animation:w 14s linear infinite}
+@keyframes w{to{transform:translateX(400px)}}
+@keyframes in{from{opacity:0;transform:translateY(14px)}}
+@keyframes pulse{50%{box-shadow:0 0 0 12px #ff5a4a33,0 0 22px 6px #ffd15a}}
+h1{margin:6px 0 2px;text-align:center;font:400 clamp(34px,6vw,60px) var(--t);color:var(--gold);letter-spacing:2px;text-shadow:0 3px 0 #7a4a12,0 6px 18px #000a}
+.sub{text-align:center;opacity:.8;margin:0 0 10px;font-size:15px}
+.bar{display:flex;justify-content:space-between;gap:8px;max-width:900px;margin:0 auto 10px;min-height:34px}
+.bar span:not(:empty){background:#0006;border:1px solid #f2c14e66;border-radius:20px;padding:5px 14px;font-weight:700;font-size:15px}
+.scr{max-width:900px;margin:0 auto;text-align:center;animation:in .45s ease}
+.card{background:linear-gradient(160deg,#f9eec9,#ecd699);color:var(--ink);border-radius:20px;padding:clamp(16px,3vw,30px);border:3px solid #8b5a2b;box-shadow:inset 0 0 50px #c9a25a99,0 14px 34px #000a;outline:2px dashed #8b5a2b88;outline-offset:-12px}
+.card h2{font:400 36px var(--t);margin:0 0 6px}
+label{display:block;margin:14px 0 6px;font-weight:700}
+input{width:140px;padding:10px;text-align:center;font:400 34px var(--t);border-radius:14px;border:3px solid #8b5a2b;background:#fffaf0;color:var(--ink)}
+button.big{background:linear-gradient(#ffe08a,#e2a82c);color:#3a2410;border:2px solid #8a5a12;border-radius:40px;padding:12px 30px;font:400 24px var(--t);letter-spacing:1px;cursor:pointer;margin:14px 6px 0;box-shadow:0 5px 0 #8a5a12,0 10px 18px #0006;transition:.15s}
+button.big:hover:not(:disabled){transform:translateY(-2px)}
+button.big:active{transform:translateY(4px);box-shadow:0 1px 0 #8a5a12}
+button:disabled{opacity:.55;cursor:default}
+#ban,#ban2{min-height:48px;font:400 clamp(26px,4.4vw,42px) var(--t);color:var(--gold);margin-top:12px;text-shadow:0 3px 12px #000a}
+.who{font:400 24px var(--t);color:#8a4a12;letter-spacing:1px}
+.q{font:700 clamp(19px,3.2vw,28px)/1.3 Lora,Georgia,serif;margin:8px 0 18px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;align-items:center;gap:12px;background:#fffaf0;color:var(--ink);border:2px solid #b98b4a;border-radius:14px;padding:12px;font:500 clamp(15px,2.3vw,20px) Lora,Georgia,serif;text-align:left;cursor:pointer;box-shadow:0 4px 0 #b98b4a;transition:.15s}
+.opt i{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(#ffe08a,#e2a82c);border:2px solid #8a5a12;font:400 22px var(--t);font-style:normal}
+.opt:hover:not(:disabled){transform:translateY(-3px);background:#fff0c4;border-color:#8a5a12}
+.opt.ok{background:var(--ok);color:#fff;border-color:#1c6a40;box-shadow:0 4px 0 #1c6a40}
+.opt.bad{background:var(--bad);color:#fff;border-color:#8a2420;box-shadow:0 4px 0 #8a2420}
+#fb{font:400 clamp(26px,4vw,38px) var(--t);margin-top:16px;min-height:44px}
+
+#deco{position:absolute;inset:0;width:100%;height:100%}
+.em{position:absolute;transform:translate(-50%,-50%);font-size:clamp(18px,3.8vw,36px);pointer-events:none;z-index:1;filter:drop-shadow(0 3px 2px #0005)}
+.bob{animation:bob 3.5s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,-62%) rotate(5deg)}}
+@keyframes spin{to{rotate:360deg}}
+
+#map{position:relative;width:100%;aspect-ratio:16/10;border-radius:10px;overflow:hidden;background:#dcb872;box-shadow:0 0 0 6px #3b2410,0 16px 36px #000b}
+#map>svg{position:absolute;inset:0;width:100%;height:100%}
+#ov{pointer-events:none;z-index:5}
+.pt{position:absolute;z-index:2;transform:translate(-50%,-50%);width:clamp(24px,4.4vw,38px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#fdf3d2,#ead29a);border:2px solid #6b4220;color:#4a2a0c;font:400 clamp(13px,2.3vw,22px) var(--t);box-shadow:0 2px 4px #0005;transition:.15s}
+.pt.gone{opacity:.25;filter:grayscale(1)}
+.pt.on{background:radial-gradient(circle at 35% 30%,#fff2a0,#f2b630);transform:translate(-50%,-50%) scale(1.45);z-index:3;box-shadow:0 0 0 4px #fff6,0 0 18px 6px #ffd15a}
+.pt.x{opacity:.4}
+.dot{fill:#8a2a1a;transform-box:fill-box;transform-origin:center;animation:dot .25s both}
+@keyframes dot{from{opacity:0;transform:scale(0)}}
+.xm path{fill:none;stroke:#c0281c;stroke-width:2;stroke-linecap:round;transform-box:fill-box;transform-origin:center;animation:pop .7s cubic-bezier(.2,1.8,.4,1) both}
+.xm circle{fill:none;stroke:#c0281c;stroke-width:.5;transform-box:fill-box;transform-origin:center;animation:ping 1.2s ease-out infinite}
+@keyframes pop{from{transform:scale(0) rotate(-120deg)}}
+@keyframes ping{from{transform:scale(.4);opacity:1}to{transform:scale(1.6);opacity:0}}
+@media(max-width:560px){.stage{height:880px}}
+.chest{position:relative;flex:none;background:none;border:0;cursor:pointer;color:#fff;font:400 24px var(--t);width:clamp(110px,21vw,200px);margin:0 clamp(3px,1.2vw,12px);transition:all .55s}
+.chest svg{width:100%;overflow:visible;display:block;filter:drop-shadow(0 8px 8px #0008)}
+.chest:hover:not(:disabled){transform:translateY(-8px) scale(1.05)}
+.chests.picked .chest:not(.sel){width:0;margin:0;opacity:0;overflow:hidden;pointer-events:none}
+.chests.picked .chest.sel{transform:scale(1.18)}
+.chest.shake{animation:shake .55s}
+@keyframes shake{20%{transform:scale(1.18) rotate(-5deg)}40%{transform:scale(1.18) rotate(5deg)}60%{transform:scale(1.18) rotate(-4deg)}80%{transform:scale(1.18) rotate(4deg)}}
+.chest .rays{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.2);transition:opacity .6s .3s}
+.chest.open .rays{opacity:1;animation:glow 1.4s ease-in-out infinite alternate}
+@keyframes glow{from{transform:scale(.8)}to{transform:scale(1.1)}}
+.chests.q .rays{opacity:0!important}
+.chest .olid,.chest .clid{transform-box:fill-box;transform-origin:center bottom}
+.chest .olid{transform:scaleY(0);transition:transform .5s cubic-bezier(.3,1.7,.5,1) .3s}
+.chest.open .olid{transform:scaleY(1)}
+.chest .clid{transition:transform .3s ease-in}
+.chest.open .clid{transform:scaleY(.03)}
+.chest .loot{opacity:0;transform-box:fill-box;transform-origin:center bottom;transform:scale(.6);transition:all .6s .45s}
+.chest.open .loot{opacity:1;transform:none}
+.chest.open .lock{opacity:0}
+.sp{position:absolute;left:50%;top:40%;font-size:24px;pointer-events:none;z-index:4;animation:burst 1.3s ease-out forwards}
+@keyframes burst{from{transform:translate(-50%,-50%) scale(.3);opacity:1}to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.2) rotate(200deg);opacity:0}}
+#qc{position:absolute;top:0;left:0;right:0;margin:0 auto;max-width:760px;z-index:1;opacity:0;pointer-events:none;transform:translateY(320px) scale(.15);transform-origin:50% 100%;transition:all 1s cubic-bezier(.2,1.15,.3,1)}
+#qc.show{opacity:1;pointer-events:auto;transform:none}
+#qc.front{z-index:3}
+.stage{position:relative;height:min(88vh,720px)}
+.chests{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);z-index:2;display:flex;justify-content:center;align-items:flex-end;transition:top .9s ease,transform .9s ease}
+.chests.q{top:100%;transform:translateY(-100%)}
+.void{opacity:0}
+.chest.empty .void{opacity:1}
+.chest.empty .loot,.chest.empty .rays{display:none}
+#kk{position:fixed;inset:0;z-index:50;pointer-events:none;background:rgba(4,16,26,0);transition:background .6s;overflow:hidden}
+#kk.on{background:rgba(3,12,20,.62)}
+#kk.rage{background:rgba(70,3,12,.62)}
+#kk>svg,#kg,#kg>svg,#ft,#ft>svg{position:absolute;inset:0;width:100%;height:100%}
+#kg{will-change:transform}
+#kk .tb{fill:#3b1457;stroke:#0b0212;stroke-width:3;stroke-linejoin:round}
+#kk .th{fill:#a46be0;opacity:.3}
+#kk .so{fill:#f0b5cf;stroke:#6b1e4a;stroke-width:1}
+#kk .si{fill:#7a1f4a}
+#kk .hd{fill:url(#kh);stroke:#0b0212;stroke-width:6;stroke-linejoin:round}
+#kk .fn{fill:#2a0c42;stroke:#0b0212;stroke-width:5;stroke-linejoin:round}
+#kk .hl{fill:#b27be0;opacity:.14}
+#kk .sp2{fill:#0b0212;opacity:.3}
+#kk .bio{fill:#4de0d0;opacity:.65}
+#kk .br{fill:none;stroke:#0b0212;stroke-width:16;stroke-linecap:round}
+#kk .ir{fill:url(#ir);stroke:#0b0212;stroke-width:4}
+#kk.rage .ir{fill:#ff2a1a}#kk .ir{transition:fill .3s}
+#kk .pu{fill:#0b0000}#kk .gl{fill:#fff;opacity:.85}
+#kk .bk{fill:#2b1710;stroke:#0b0212;stroke-width:3;stroke-linejoin:round}
+#kk .bh{fill:#7a5236;opacity:.5}
+#kk .eyes{opacity:0;transition:opacity .7s}#kk.look .eyes{opacity:1}
+#kk .maw{transform-box:fill-box;transform-origin:50% 30%;transform:scaleY(.1);opacity:0;transition:transform .9s cubic-bezier(.2,1.4,.4,1),opacity .4s}
+#kk.look .maw{transform:none;opacity:1}
+#kk .mo{fill:#1c0008;stroke:#0b0212;stroke-width:5;stroke-linejoin:round}
+#kk .tt{fill:#efe6cc;stroke:#0b0212;stroke-width:1.5;stroke-linejoin:round}
+#kk .ld{fill:#12041c;stroke:#0b0212;stroke-width:3;stroke-linejoin:round}
+#kk .sc{fill:none;stroke:#cdb4e6;stroke-width:3;opacity:.55;stroke-linecap:round}
+#kk .gp{transform-box:fill-box;opacity:0;transform:translate(var(--tx),var(--ty)) rotate(var(--r));transition:transform .4s cubic-bezier(.3,1.6,.5,1),opacity .12s}
+#kk.grab .gp{opacity:1;transform:none}
+#kk .bt{transform-box:fill-box;transform-origin:50% 100%;animation:sw 1.8s ease-in-out infinite alternate}
+@keyframes sw{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+#kk .arm{transform-box:fill-box;transform-origin:50% 100%;transform:scale(.2) translateY(60px);opacity:0;transition:transform 1s cubic-bezier(.2,1.3,.4,1),opacity .3s}
+#kk.grab .arm{transform:none;opacity:1}
+#kk .w1{fill:#1a6a86}#kk .w2{fill:#0e4a63}
+#kk .wv{animation:wv 3s linear infinite}
+@keyframes wv{to{transform:translateX(-120px)}}
+#kk .cc{position:absolute;margin:0;transition:none;pointer-events:none}
+#kk #ft.sh{animation:cs .25s infinite}
+@keyframes cs{25%{transform:translate(-5px,2px) rotate(-3deg)}75%{transform:translate(5px,-2px) rotate(3deg)}}
+:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){#kk .bt,.waves,#kk .wv{animation:none}}
+</style></head><body><div class="waves"></div>
+<h1>🗺️ El Tesoro del PGN 🏴‍☠️</h1><p class="sub">Presupuesto General de la Nación · Colombia</p>
+<div class="bar"><span id="who2"></span><span id="sc"></span></div>
+
+<section class="scr" id="s0"><div class="card"><h2>¡Zarpemos!</h2>
+<p>Cada estudiante tiene un número. El mapa señalará al azar quién abre un cofre y responde.</p>
+<label for="n">¿Cuántos estudiantes hay?</label><input id="n" type="number" min="2" max="60" value="20">
+<br><button class="big" onclick="start()">¡Zarpar! ⚓</button></div></section>
+
+<section class="scr" id="s1" hidden>
+<div id="map"><svg id="deco" viewBox="0 0 160 100"><defs>
+<linearGradient id="sea" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d3eddf"/><stop offset=".5" stop-color="#9fd3d0"/><stop offset="1" stop-color="#6fb5be"/></linearGradient>
+<radialGradient id="isl"><stop offset="0" stop-color="#7fa95a"/><stop offset=".55" stop-color="#a8c27a"/><stop offset=".85" stop-color="#e9d49b"/><stop offset="1" stop-color="#d7b977"/></radialGradient>
+<pattern id="wv" width="12" height="7" patternUnits="userSpaceOnUse"><path d="M0 3.5Q3 .5 6 3.5T12 3.5" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width=".5"/></pattern>
+<path id="i1" d="M8 30C6 14 22 6 36 10C52 6 62 18 58 32C64 46 50 58 34 56C18 60 6 48 8 30Z"/>
+<path id="i2" d="M70 14C84 4 108 6 118 18C132 20 138 36 128 46C132 60 116 68 100 62C86 70 70 60 72 46C60 36 62 22 70 14Z"/>
+<path id="i3" d="M14 70C26 62 44 64 54 72C66 70 80 78 74 88C60 96 36 96 22 90C8 86 6 76 14 70Z"/>
+<path id="i4" d="M96 78C108 70 128 72 140 80C150 88 140 96 120 96C104 96 92 90 96 78Z"/></defs>
+<rect width="160" height="100" fill="url(#sea)"/><rect width="160" height="100" fill="url(#wv)"/>
+<g stroke-linejoin="round"><use href="#i1" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3.5"/><use href="#i1" fill="url(#isl)" stroke="#6b4220" stroke-width=".6"/>
+<use href="#i2" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3.5"/><use href="#i2" fill="url(#isl)" stroke="#6b4220" stroke-width=".6"/>
+<use href="#i3" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3.5"/><use href="#i3" fill="url(#isl)" stroke="#6b4220" stroke-width=".6"/>
+<use href="#i4" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3.5"/><use href="#i4" fill="url(#isl)" stroke="#6b4220" stroke-width=".6"/></g>
+<path d="M18 22Q50 70 92 40T146 84" fill="none" stroke="#a8321e" stroke-width=".7" stroke-dasharray="2 1.6" opacity=".8"/>
+<path d="M143 81l6 6m0-6l-6 6" stroke="#a8321e" stroke-width="1.4"/></svg>
+<span class="em" style="left:9%;top:16%">🌴</span><span class="em" style="left:74%;top:17%">🌴</span><span class="em" style="left:15%;top:80%">🌴</span><span class="em" style="left:89%;top:84%">🌴</span>
+<span class="em bob" style="left:47%;top:54%">⛵</span><span class="em" style="left:31%;top:47%">🐋</span><span class="em" style="left:92%;top:42%">🐙</span><span class="em" style="left:60%;top:88%">🏴‍☠️</span><span class="em" style="left:94%;top:9%;font-size:clamp(28px,6vw,54px)">🧭</span></div><div id="ban"></div>
+<button class="big" id="go" onclick="spin()">🔎 Buscar al elegido</button>
+<button class="big" id="tochest" onclick="chests()" hidden>Elegir cofre</button></section>
+
+<section class="scr" id="s2" hidden>
+<div id="ban2"></div><button class="big" id="ne" onclick="next()" hidden>Siguiente turno ➜</button><div class="stage">
+<div class="card" id="qc"><div class="who" id="who"></div><div class="q" id="q"></div><div class="opts" id="opts"></div><div id="fb"></div><button class="big" id="nx" onclick="next()" hidden>Siguiente turno ➜</button></div>
+<div class="chests" id="ch"></div></div></section>
+
+
+<section class="scr" id="s4" hidden><div class="card"><h2>🏆 ¡Fin del tesoro!</h2><p id="fin" style="font-size:22px"></p>
+<button class="big" onclick="show('s0')">Jugar de nuevo</button></div></section>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+<linearGradient id="w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c0803a"/><stop offset="1" stop-color="#744418"/></linearGradient>
+<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe58a"/><stop offset="1" stop-color="#d49a22"/></linearGradient>
+<radialGradient id="glow"><stop offset="0" stop-color="#fff2a0"/><stop offset=".5" stop-color="#ffd24a" stop-opacity=".5"/><stop offset="1" stop-color="#ffd24a" stop-opacity="0"/></radialGradient></defs></svg>
+
+<script>
+const Q=[
+["¿Qué es el PGN?","El plan de ingresos y gastos del Estado para un año","Un banco del Estado","Una ley que crea el Congreso cada mes","Un impuesto que pagan las empresas"],
+["¿Entre qué fechas va el año del presupuesto?","1 de enero al 31 de diciembre","1 de julio al 30 de junio","1 de agosto al 31 de julio","1 de marzo al 28 de febrero"],
+["¿Cuál es uno de los tres grandes rubros del PGN?","Servicio de la deuda","Turismo","Vacaciones","Exportaciones"],
+["¿Qué se paga en el rubro de «servicio de la deuda»?","Capital e intereses","Solo nómina","Las pensiones de todos","Proyectos nuevos de obras"],
+["¿Qué rubro financia proyectos para el desarrollo del país?","Inversión","Funcionamiento","Servicio de la deuda","Adición presupuestal"],
+["Si el Congreso no aprueba el presupuesto a tiempo, ¿qué pasa?","El Gobierno lo expide por decreto","Se cancela el presupuesto","El país no gasta nada","Lo aprueba la Corte"],
+["¿Para qué sirve una ley de financiamiento?","Crea o ajusta impuestos para cubrir el faltante","Reduce el salario de los congresistas","Paga la deuda externa","Cambia la Constitución"],
+["¿Cuál fue el primer presupuesto del gobierno Duque?","2019","2015","2023","2026"],
+["¿Qué hecho inédito ocurrió con el presupuesto de 2025?","El Congreso lo hundió y el Gobierno lo expidió por decreto","Fue el más pequeño de la historia","No se hizo presupuesto","Lo votó el pueblo"],
+["¿Qué presupuesto se está discutiendo para el año 2027?","El proyecto de presupuesto 2027","El presupuesto de 2019","El presupuesto de 2022","El presupuesto de 2023"]];
+const $=i=>document.getElementById(i),rnd=n=>crypto.getRandomValues(new Uint32Array(1))[0]%n;
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+let names,left,qs,score,done,cur,pts,busy;
+function show(i){document.querySelectorAll('.scr').forEach(e=>e.hidden=e.id!=i);if(i=='s0'){$('sc').textContent='';$('who2').textContent=''}}
+const NS='http://www.w3.org/2000/svg';
+const ISL='M32 30Q42 12 66 18Q84 6 108 16Q134 12 140 38Q154 54 134 68Q128 88 98 82Q74 94 54 82Q26 84 26 62Q12 48 32 30Z';
+const MAP=`<svg viewBox="0 0 160 100" preserveAspectRatio="none"><defs>
+<radialGradient id="vg" cx=".5" cy=".5" r=".75"><stop offset=".5" stop-color="#5a3010" stop-opacity="0"/><stop offset="1" stop-color="#3a1c06" stop-opacity=".95"/></radialGradient>
+<radialGradient id="pp" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#f8e9bd"/><stop offset="1" stop-color="#d4ab62"/></radialGradient>
+<filter id="nz"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="3" seed="4"/><feColorMatrix values="0 0 0 0 .35 0 0 0 0 .22 0 0 0 0 .08 0 0 0 .5 -.1"/></filter>
+<filter id="bl"><feGaussianBlur stdDeviation="2"/></filter></defs>
+<rect width="160" height="100" fill="url(#pp)"/><rect width="160" height="100" filter="url(#nz)" opacity=".6"/>
+<ellipse cx="30" cy="80" rx="22" ry="9" fill="#a8742a" opacity=".13"/><ellipse cx="125" cy="22" rx="20" ry="8" fill="#a8742a" opacity=".13"/><circle cx="22" cy="84" r="6" fill="none" stroke="#8a5a22" stroke-width=".8" opacity=".25"/>
+<path d="M80 0V100M0 50H160" stroke="#6b4220" stroke-width=".35" opacity=".13"/>
+<path d="${ISL}" fill="none" stroke="#7fa3a0" stroke-width="10" opacity=".4" filter="url(#bl)"/>
+<path d="${ISL}" fill="none" stroke="#5f8582" stroke-width="6" opacity=".22" stroke-dasharray="1.5 2"/>
+<path d="${ISL}" fill="none" stroke="#5f8582" stroke-width="3" opacity=".35" stroke-dasharray="3 1.5"/>
+<g fill="none" stroke="#6b4220" stroke-width=".4" opacity=".6"><path d="M6 16q2-2 4 0t4 0t4 0M14 26q2-2 4 0t4 0t4 0M130 8q2-2 4 0t4 0M148 30q2-2 4 0t4 0M6 62q2-2 4 0t4 0t4 0M12 74q2-2 4 0t4 0M120 92q2-2 4 0t4 0t4 0M96 94q2-2 4 0t4 0M148 78q2-2 4 0t4 0M70 5q2-2 4 0t4 0M40 94q2-2 4 0t4 0t4 0M150 50q2-2 4 0t4 0M8 44q2-2 4 0t4 0"/></g>
+<path d="${ISL}" fill="#efd9a0" stroke="#5a3a14" stroke-width=".8"/>
+<path d="${ISL}" transform="translate(80 50) scale(.8) translate(-80 -50)" fill="#a9bd72" opacity=".6" stroke="#5f7a35" stroke-width=".3" stroke-dasharray="1 .8"/>
+<g fill="#c4a064" stroke="#6b4220" stroke-width=".35"><path d="M108 30l6-11 6 11zM116 31l5-9 5 9zM101 32l4-7 4 7z"/><path d="M38 64l6-11 6 11zM46 65l5-8 5 8z"/></g>
+<g fill="#7a5524" opacity=".5"><path d="M114 19l6 11h-6zM121 22l5 9h-5zM44 53l6 11h-6z"/></g>
+<g fill="#fff" opacity=".7"><path d="M112.6 22.5l1.4-3.5 1.4 3.5zM43 56l1-2.5 1 2.5z"/></g>
+<ellipse cx="70" cy="58" rx="7" ry="3.6" fill="#a8c7c4" stroke="#5c8582" stroke-width=".4"/>
+<path d="M70 55Q62 48 66 40T60 28M73 60Q80 70 74 80" fill="none" stroke="#6f9a98" stroke-width=".6" stroke-dasharray="1.6 1"/>
+<g font-size="5"><text x="52" y="40">🌴</text><text x="90" y="34">🌲</text><text x="96" y="68">🌴</text><text x="122" y="62">🌲</text><text x="34" y="52">🌲</text><text x="82" y="76">🌴</text></g>
+<g transform="translate(142 17)"><circle r="8" fill="none" stroke="#5a3a14" stroke-width=".4"/><circle r="5.5" fill="none" stroke="#5a3a14" stroke-width=".25" stroke-dasharray=".8 .8"/><path d="M0-9L1.6-1.6 9 0 1.6 1.6 0 9-1.6 1.6-9 0-1.6-1.6Z" fill="#7a4a1a" stroke="#3a2410" stroke-width=".3"/><path d="M0-9L1.6-1.6-1.6-1.6Z" fill="#b3261e"/><text y="-10.5" text-anchor="middle" font-size="3.6" font-family="Pirata One,serif" fill="#3a2410">N</text></g>
+<g transform="translate(14 95)" stroke="#3a2410" stroke-width=".4"><path d="M0 0h14M0-1v2M7-1v2M14-1v2"/></g>
+<text x="80" y="8.5" text-anchor="middle" font-family="Pirata One,serif" font-size="6.5" fill="#5a3a14" opacity=".85">ISLA DEL PRESUPUESTO</text>
+<text x="3" y="97" font-size="9">⛵</text><text x="139" y="97" font-size="9">🐉</text><text x="6" y="10" font-size="6">☠️</text><text x="24" y="97" font-size="5">⚓</text><text x="146" y="70" font-size="7">🐙</text><text x="6" y="42" font-size="6">🦈</text>
+<rect x="2" y="2" width="156" height="96" fill="none" stroke="#5a3a14" stroke-width=".7" stroke-dasharray="3 1.2" opacity=".6"/><rect x="4" y="4" width="152" height="92" fill="none" stroke="#5a3a14" stroke-width=".3" opacity=".5"/>
+<rect width="160" height="100" fill="url(#vg)"/></svg>`;
+const chestSVG=()=>`<svg viewBox="0 -40 120 140"><circle class="rays" cx="60" cy="30" r="62" fill="url(#glow)"/>
+<g class="olid"><path d="M12 48L20 -24Q60 -38 100 -24L108 48Z" fill="url(#w)" stroke="#4a2a0c" stroke-width="3"/><path d="M26 42L31 -14Q60 -24 89 -14L94 42Z" fill="#4b1c0e"/><rect x="22" y="-24" width="11" height="72" fill="url(#g)" opacity=".9"/><rect x="87" y="-24" width="11" height="72" fill="url(#g)" opacity=".9"/></g>
+<rect x="10" y="48" width="100" height="44" rx="5" fill="url(#w)" stroke="#4a2a0c" stroke-width="3"/><path d="M12 62H108M12 77H108" stroke="#4a2a0c" stroke-width="1.5" opacity=".5"/>
+<rect x="20" y="48" width="12" height="44" fill="url(#g)" stroke="#8a5a12" stroke-width="2"/><rect x="88" y="48" width="12" height="44" fill="url(#g)" stroke="#8a5a12" stroke-width="2"/>
+<ellipse class="void" cx="60" cy="49" rx="44" ry="8" fill="#150803"/><g class="loot"><ellipse cx="60" cy="44" rx="46" ry="11" fill="url(#g)" stroke="#8a5a12" stroke-width="2"/><circle cx="38" cy="36" r="8" fill="url(#g)" stroke="#8a5a12" stroke-width="2"/><circle cx="82" cy="35" r="8" fill="url(#g)" stroke="#8a5a12" stroke-width="2"/><circle cx="60" cy="32" r="9" fill="url(#g)" stroke="#8a5a12" stroke-width="2"/><text x="60" y="38" font-size="20" text-anchor="middle">💎</text></g>
+<g class="clid"><path d="M10 50Q10 12 60 12Q110 12 110 50Z" fill="url(#w)" stroke="#4a2a0c" stroke-width="3"/><rect x="20" y="17" width="12" height="33" fill="url(#g)" stroke="#8a5a12" stroke-width="2"/><rect x="88" y="17" width="12" height="33" fill="url(#g)" stroke="#8a5a12" stroke-width="2"/><rect x="10" y="43" width="100" height="8" fill="url(#g)" stroke="#8a5a12" stroke-width="2"/></g>
+<rect class="lock" x="50" y="46" width="20" height="24" rx="4" fill="url(#g)" stroke="#8a5a12" stroke-width="2.5"/><circle class="lock" cx="60" cy="56" r="3.5" fill="#4a2a0c"/></svg>`;
+function start(){
+ names=Array.from({length:Math.max(2,Math.min(60,+$('n').value||20))},(_,i)=>String(i+1));
+ left=names.map((_,i)=>i);qs=shuf(Q);score=0;done=0;
+ const m=$('map'),n=names.length,c=Math.ceil(Math.sqrt(n*1.7)),r=Math.ceil(n/c),slots=shuf(Array.from({length:c*r},(_,i)=>i));
+ m.innerHTML=MAP+'<svg id="ov" viewBox="0 0 160 100"></svg>';
+ pts=names.map((nm,i)=>{const s=slots[i],e=document.createElement('div'),x=9+((s%c)+.5)/c*84+(rnd(5)-2),y=14+(Math.floor(s/c)+.5)/r*74+(rnd(5)-2);
+  e.className='pt';e.textContent=nm;e.dataset.x=x;e.dataset.y=y;e.style.left=x+'%';e.style.top=y+'%';m.appendChild(e);return e});
+ upd();round()}
+function upd(){$('sc').textContent='⭐ Aciertos: '+score+' / '+done}
+function round(){
+ pts.forEach((p,i)=>{p.className='pt'+(left.includes(i)?'':' gone')});$('ov').innerHTML='';
+ $('ban').textContent='';$('go').hidden=false;$('go').disabled=false;$('tochest').hidden=true;show('s1')}
+function spin(){
+ if(busy)return;busy=true;$('go').disabled=true;$('ban').textContent='Buscando el tesoro… 🔎';
+ const target=left[rnd(left.length)],hops=22+rnd(6),seq=[];let last=-1;
+ for(let i=0;i<hops-1;i++){let x;do{x=left[rnd(left.length)]}while(x==last&&left.length>1);seq.push(x);last=x}
+ seq.push(target);let i=0;
+ (function hop(){
+  pts.forEach(p=>p.classList.remove('on'));pts[seq[i]].classList.add('on');
+  if(++i<seq.length)setTimeout(hop,70+i*i*.55);
+  else{cur=target;$('go').hidden=true;setTimeout(()=>{pts[cur].className='pt x';$('ban').textContent='📍 ¡Trazando el camino al tesoro!';
+   trail(+pts[cur].dataset.x*1.6,+pts[cur].dataset.y,()=>{busy=false;$('ban').textContent='¡Número '+names[cur]+', el tesoro es tuyo!';$('tochest').hidden=false})},500)}
+ })()}
+function trail(tx,ty,done){
+ const ov=$('ov'),S=[11,89],P=[S],dx=tx-S[0],dy=ty-S[1],len=Math.hypot(dx,dy),nx=-dy/len,ny=dx/len,mk=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);ov.appendChild(e);return e};
+ for(let i=1;i<=4;i++){const t=i/5,o=(rnd(2001)/1000-1)*len*.16;P.push([S[0]+dx*t+nx*o,S[1]+dy*t+ny*o])}
+ P.push([tx,ty]);let d='M'+P[0];
+ for(let i=1;i<P.length-1;i++)d+=' Q'+P[i]+' '+(P[i][0]+P[i+1][0])/2+','+(P[i][1]+P[i+1][1])/2;
+ d+=' L'+P[P.length-1];
+ const pa=mk('path',{d,fill:'none'}),L=pa.getTotalLength(),k=Math.floor(L/2.4);
+ for(let i=0;i<=k;i++){const q=pa.getPointAtLength(i*2.4);mk('circle',{cx:q.x,cy:q.y,r:.75,class:'dot'}).style.animationDelay=(i*28)+'ms'}
+ setTimeout(()=>{const g=mk('g',{class:'xm',transform:'translate('+tx+' '+ty+')'});
+  g.innerHTML='<circle r="5"/><path d="M-3.6-3.6L3.6 3.6M3.6-3.6L-3.6 3.6"/>';done()},k*28+300)}
+function chests(){
+ $('ban2').textContent='Número '+names[cur]+', ¡elige tu cofre!';$('who2').textContent='🎯 Turno del número '+names[cur];
+ ctype=shuf([1,1,0,0]);$('ne').hidden=true;$('qc').className='card';$('ch').className='chests';
+ $('ch').innerHTML=[1,2,3,4].map(k=>'<button class="chest" onclick="openC(this)">'+chestSVG()+'Cofre '+k+'</button>').join('');show('s2')}
+var ctype;
+function burst(b,em,n=18){for(let i=0;i<n;i++){const s=document.createElement('span');s.className='sp';s.textContent=em[rnd(em.length)];
+ s.style.setProperty('--dx',(rnd(361)-180)+'px');s.style.setProperty('--dy',-(60+rnd(200))+'px');s.style.animationDelay=(rnd(300))+'ms';b.appendChild(s)}}
+function splash(x,y,em){const d=document.createElement('div');d.style.cssText='position:fixed;z-index:60;left:'+x+'px;top:'+y+'px';document.body.appendChild(d);burst(d,em||['💦','🫧'],8);setTimeout(()=>d.remove(),2200)}
+const bez=(a,b,c,d,n)=>{const o=[];for(let i=0;i<=n;i++){const t=i/n,u=1-t;o.push([u*u*u*a[0]+3*u*u*t*b[0]+3*u*t*t*c[0]+t*t*t*d[0],u*u*u*a[1]+3*u*u*t*b[1]+3*u*t*t*c[1]+t*t*t*d[1]])}return o};
+function tent(A,B,C,D,W,sg){
+ const P=bez(A,B,C,D,30),e=P[30],q=P[29];let dx=e[0]-q[0],dy=e[1]-q[1];const l=Math.hypot(dx,dy)||1;dx/=l;dy/=l;
+ const r0=W*1.1,O=[e[0]-sg*dy*r0,e[1]+sg*dx*r0],a0=Math.atan2(-sg*dx,sg*dy);
+ for(let j=1;j<=16;j++){const u=j/16,th=a0+sg*u*Math.PI*2.1,r=r0*(1-.6*u);P.push([O[0]+r*Math.cos(th),O[1]+r*Math.sin(th)])}
+ const n=P.length,hw=i=>W*(1-.88*Math.pow(i/(n-1),.8))/2,
+ nm=i=>{const a=P[Math.max(0,i-1)],c=P[Math.min(n-1,i+1)],x=c[0]-a[0],y=c[1]-a[1],m=Math.hypot(x,y)||1;return[-y/m,x/m]},
+ poly=(off,wr)=>{const L=[],R=[];for(let i=0;i<n;i++){const [x,y]=nm(i),w=hw(i),c=[P[i][0]+x*off*w,P[i][1]+y*off*w];L.push([c[0]+x*w*wr,c[1]+y*w*wr]);R.push([c[0]-x*w*wr,c[1]-y*w*wr])}return L.concat(R.reverse()).map(a=>a[0].toFixed(1)+','+a[1].toFixed(1)).join(' ')};
+ let su='';for(let i=5;i<n-3;i+=3){const [x,y]=nm(i),w=hw(i),X=(P[i][0]+x*w*.35*sg).toFixed(1),Y=(P[i][1]+y*w*.35*sg).toFixed(1);su+=`<circle class="so" cx="${X}" cy="${Y}" r="${(w*.38).toFixed(1)}"/><circle class="si" cx="${X}" cy="${Y}" r="${(w*.18).toFixed(1)}"/>`}
+ return `<polygon class="tb" points="${poly(0,1)}"/><polygon class="th" points="${poly(-.4,.3)}"/>${su}`}
+function spl(w,k){const o=[];for(let i=0;i<w.length-1;i++){const a=w[Math.max(0,i-1)],b=w[i],c=w[i+1],d=w[Math.min(w.length-1,i+2)];for(let j=0;j<k;j++){const t=j/k,t2=t*t,t3=t2*t;o.push([0,1].map(z=>.5*(2*b[z]+(c[z]-a[z])*t+(2*a[z]-5*b[z]+4*c[z]-d[z])*t2+(3*b[z]-a[z]-3*c[z]+d[z])*t3)))}}o.push(w[w.length-1]);return o}
+function wrap(P,W,sg,split,gb,gf){
+ const e=P[P.length-1],q=P[P.length-2];let dx=e[0]-q[0],dy=e[1]-q[1];const l=Math.hypot(dx,dy)||1;dx/=l;dy/=l;
+ const r0=W*.45,O=[e[0]-sg*dy*r0,e[1]+sg*dx*r0],a0=Math.atan2(-sg*dx,sg*dy);
+ for(let j=1;j<=16;j++){const u=j/16,th=a0+sg*u*Math.PI*2.1,r=r0*(1-.6*u);P.push([O[0]+r*Math.cos(th),O[1]+r*Math.sin(th)])}
+ const N=P.length,mk=(t,c,g)=>{const x=document.createElementNS(NS,t);x.setAttribute('class',c);g.appendChild(x);return x},
+ HW=P.map((_,i)=>W*(1-.88*Math.pow(i/(N-1),1.6))/2),
+ NM=P.map((_,i)=>{const a=P[Math.max(0,i-1)],c=P[Math.min(N-1,i+1)],x=c[0]-a[0],y=c[1]-a[1],m=Math.hypot(x,y)||1;return[-y/m,x/m]}),
+ A=mk('polygon','tb',gb),Ah=mk('polygon','th',gb),B=mk('polygon','tb',gf),Bh=mk('polygon','th',gf),sk=[];
+ for(let i=5;i<N-3;i+=3)for(const g of(i>=split?[gb,gf]:[gb])){const X=P[i][0]+NM[i][0]*HW[i]*.35*sg,Y=P[i][1]+NM[i][1]*HW[i]*.35*sg,o=mk('circle','so',g),c=mk('circle','si',g);
+  for(const [el,r] of [[o,.24],[c,.11]]){el.setAttribute('cx',X.toFixed(1));el.setAttribute('cy',Y.toFixed(1));el.setAttribute('r',(HW[i]*r).toFixed(1));el.style.display='none'}sk.push({i,o,c,on:0})}
+ const poly=(off,wr,a,m)=>{const L=[],R=[];for(let i=a;i<=m;i++){const w=HW[i]*Math.min(1,.12+(m-i)/7),[x,y]=NM[i],cx=P[i][0]+x*off*w,cy=P[i][1]+y*off*w;L.push((cx+x*w*wr).toFixed(1)+','+(cy+y*w*wr).toFixed(1));R.push((cx-x*w*wr).toFixed(1)+','+(cy-y*w*wr).toFixed(1))}return L.concat(R.reverse()).join(' ')};
+ return{N,draw(m){m=Math.max(1,Math.min(N-1,m|0));A.setAttribute('points',poly(0,1,0,m));Ah.setAttribute('points',poly(-.4,.3,0,m));
+  const f=m>split+1;B.setAttribute('points',f?poly(0,1,split,m):'');Bh.setAttribute('points',f?poly(-.4,.3,split,m):'');
+  sk.forEach(z=>{const on=z.i<=m-2?1:0;if(z.on!==on){z.on=on;z.o.style.display=z.c.style.display=on?'':'none'}})}}}
+function krakenAttack(b,done){
+ const sv=b.querySelector('svg'),cr=sv.getBoundingClientRect(),W=innerWidth,H=innerHeight,cw=cr.width,ch=cr.height,cx=cr.left+cw/2,cy=cr.top+ch/2,hw=Math.min(W*.42,H*.55,420),
+ ct=cr.top+ch*.37,cb=cr.top+ch*.94,k=document.createElement('div'),ye=ct-hw*.42,rx=hw*.07,yt=ye-hw*.5;
+ k.id='kk';
+ let bk='',eyes='',spots='',teeth='';
+ for(const s of [-1,1]){
+  for(let i=0;i<3;i++){const x=cx+s*hw*(.5+.3*i),t=H-hw*(.55+.2*i);
+   bk+=`<g class="bt" style="animation-delay:${i*.3}s">${tent([x,H+60],[x+s*hw*.25,H-hw*.2],[x-s*hw*.1,t+hw*.2],[x+s*hw*.12,t],Math.max(34,hw*.13),i%2?-s:s)}</g>`}
+  const ex=cx+s*hw*.24,w=rx*1.2;
+  eyes+=`<circle cx="${ex}" cy="${ye}" r="${rx*2.6}" fill="url(#gl)"/><ellipse class="ir" cx="${ex}" cy="${ye}" rx="${rx}" ry="${rx*.8}"/><ellipse class="pu" cx="${ex}" cy="${ye}" rx="${rx*.12}" ry="${rx*.78}"/><circle class="gl" cx="${ex-rx*.35}" cy="${ye+rx*.1}" r="${rx*.13}"/><clipPath id="ec${s}"><ellipse cx="${ex}" cy="${ye}" rx="${rx}" ry="${rx*.8}"/></clipPath><polygon class="ld" clip-path="url(#ec${s})" points="${ex+s*w*1.15},${ye-rx*1.5} ${ex-s*w*1.15},${ye-rx*1.5} ${ex-s*w*1.15},${ye+rx*.35} ${ex+s*w*1.15},${ye-rx*.2}"/><path class="br" d="M${ex+s*rx*2} ${ye-rx*1.2}L${ex-s*rx*1.5} ${ye-rx*.1}"/>`}
+ const ym=ct-hw*.12,ry=hw*.075,mw=hw*.3,A=[cx-mw,ym+ry*.6],B=[cx+mw,ym+ry*.6],Ct=[cx,ym-ry*2.4],Cb=[cx,ym+ry*2.6],
+ q=(c,t)=>[(1-t)*(1-t)*A[0]+2*(1-t)*t*c[0]+t*t*B[0],(1-t)*(1-t)*A[1]+2*(1-t)*t*c[1]+t*t*B[1]],n=12;
+ for(let i=0;i<n;i++){const t0=i/n,t1=(i+1)/n,tm=(t0+t1)/2,m=Math.sin(Math.PI*tm),l=ry*(i%2?.9:.55)*(.5+.9*m);
+  for(const [c,d] of [[Ct,1],[Cb,-1]]){const a=q(c,t0),e=q(c,t1),o=q(c,tm),L=d>0?l:l*.8;
+   teeth+=`M${a[0]} ${a[1]}L${o[0]} ${o[1]+d*L}L${e[0]} ${e[1]}Z`}}
+ for(let i=0;i<8;i++)spots+=`<circle class="${i%2?'bio':'sp2'}" cx="${cx+(rnd(100)-50)/100*hw*.8}" cy="${yt+hw*.15+rnd(100)/100*hw*.6}" r="${i%2?hw*.01+rnd(3):hw*.02+rnd(Math.round(hw*.03))}"/>`;
+ const fin=s=>`<path class="fn" d="M${cx+s*hw*.26} ${yt+hw*.32}L${cx+s*hw*.98} ${yt+hw*.02}L${cx+s*hw*.74} ${yt+hw*.38}L${cx+s*hw*.95} ${yt+hw*.62}L${cx+s*hw*.5} ${yt+hw*.74}Z"/>`,
+ spike=(x,y,h,t)=>`<path class="fn" d="M${x-hw*.03} ${y}L${x+t} ${y-h}L${x+hw*.03} ${y}Z"/>`,
+ wave=(y0,c)=>{let d='M-240 '+(H+30)+'V'+y0;for(let x=-240;x<W+240;x+=120)d+=' q30 -24 60 0 t60 0';return `<path class="${c}" d="${d}V${H+30}Z"/>`},vb=`viewBox="0 0 ${W} ${H}"`;
+ k.innerHTML=`<div id="kg"><svg ${vb}><defs><radialGradient id="kh" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="#4a1c66"/><stop offset="1" stop-color="#0a0210"/></radialGradient><radialGradient id="ir"><stop offset="0" stop-color="#fff2a0"/><stop offset=".5" stop-color="#ffb520"/><stop offset="1" stop-color="#d4381c"/></radialGradient><radialGradient id="gl"><stop offset="0" stop-color="#ff2a1a" stop-opacity=".6"/><stop offset="1" stop-color="#ff2a1a" stop-opacity="0"/></radialGradient></defs>
+<g id="rs" style="transform:translateY(${H}px)">${bk}${fin(-1)}${fin(1)}${spike(cx,yt+hw*.03,hw*.15,0)}${spike(cx-hw*.12,yt+hw*.06,hw*.1,-hw*.03)}${spike(cx+hw*.12,yt+hw*.06,hw*.1,hw*.03)}<path class="hd" d="M${cx-hw*.52} ${H+120}C${cx-hw*.66} ${yt+hw*.6},${cx-hw*.4} ${yt+hw*.12},${cx} ${yt}C${cx+hw*.4} ${yt+hw*.12},${cx+hw*.66} ${yt+hw*.6},${cx+hw*.52} ${H+120}Z"/>${spots}
+<g class="eyes">${eyes}<path class="sc" d="M${cx-hw*.36} ${ye-rx*2.4}L${cx-hw*.3} ${ye-rx*.8}L${cx-hw*.24} ${ye+rx*.3}L${cx-hw*.17} ${ye+rx*1.8}"/></g>
+<g class="maw"><path class="mo" d="M${A}Q${Ct} ${B}Q${Cb} ${A}Z"/><path class="tt" d="${teeth}"/></g></g><g id="gb"></g></svg>
+<div id="ft" style="transform-origin:${cx}px ${cy}px"><div class="cc chest" style="left:${cr.left}px;top:${cr.top}px;width:${cw}px">${sv.outerHTML}</div>
+<svg ${vb}><defs><clipPath id="cp"><rect x="0" y="${ct-2}" width="${W}" height="${H}"/></clipPath></defs><g id="gf" clip-path="url(#cp)"></g></svg></div></div>
+<svg ${vb}><g class="wv">${wave(H-46,'w2')}</g><g class="wv" style="animation-direction:reverse">${wave(H-26,'w1')}</g></svg>`;
+ document.body.appendChild(k);b.style.visibility='hidden';
+ const rs=k.querySelector('#rs'),kg=k.querySelector('#kg'),ft=k.querySelector('#ft'),gb=k.querySelector('#gb'),gf=k.querySelector('#gf'),T=[];
+ for(const s of [-1,1])for(const v of [0]){const yo=v*ch*.3;
+  T.push({t:wrap(spl([[cx+s*hw*.95,H+60],[cx+s*cw*.95,cb+ch*.5],[cx+s*cw*.62,cy+ch*.1],[cx+s*cw*.22,cy-ch*.12],[cx-s*cw*.02,ct-ch*.2],[cx-s*cw*.38,ct-ch*.08],[cx-s*cw*.32,ct+ch*.22+yo],[cx+s*cw*.05,cy+ch*.12+yo],[cx+s*cw*.3,cb-ch*.14+yo*.3]],12),cw*.3,s,48,gb,gf),d:v*500+(s>0?250:0)})}
+ const ease=p=>p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+ setTimeout(()=>{const t0=performance.now();(function f(t){if(!k.isConnected)return;let all=1;T.forEach(o=>{const p=Math.max(0,Math.min(1,(t-t0-o.d)/2600));if(p<1)all=0;o.t.draw(ease(p)*(o.t.N-1))});if(!all)requestAnimationFrame(f)})(t0)},1700);
+ setTimeout(()=>{k.classList.add('on');rs.style.transition='transform 1.8s cubic-bezier(.2,.9,.3,1)';rs.style.transform='none'},60);
+ setTimeout(()=>k.classList.add('look'),1200);
+ setTimeout(()=>{k.classList.add('rage');$('ban2').textContent='🐙 ¡El Kraken atrapó el cofre!'},4900);
+ setTimeout(()=>{kg.style.transition='transform 2.4s ease-in';kg.style.transform='translateY('+(H-Math.min(yt-hw*.2,H-hw*1.2)+20)+'px)';
+  setTimeout(()=>splash(cx,H-40),1500)},5700);
+ setTimeout(()=>{k.remove();done()},8400)}
+function openC(b){
+ const c=$('ch'),empty=!ctype[[...c.children].indexOf(b)];
+ c.classList.add('picked');b.classList.add('sel');[...c.children].forEach(x=>x.disabled=true);$('ban2').textContent='';
+ setTimeout(()=>b.classList.add('shake'),600);
+ if(empty){setTimeout(()=>{b.classList.remove('shake');krakenAttack(b,()=>{$('ban2').textContent='🐙 ¡El Kraken se llevó el tesoro! Cofre vacío…';$('ne').hidden=false})},1200);return}
+ setTimeout(()=>{b.classList.remove('shake');b.classList.add('open');burst(b,['✨','🪙','⭐','💰'])},1250);
+ setTimeout(question,2300)}
+function question(){
+ const q=qs.pop(),ops=shuf(q.slice(1).map((t,i)=>({t,ok:i==0}))),L='ABCD';
+ $('who').textContent='Responde el número '+names[cur];$('q').textContent=q[0];$('fb').textContent='';$('fb').style.color='';$('nx').hidden=true;$('opts').innerHTML='';
+ ops.forEach((o,i)=>{const b=document.createElement('button');b.className='opt';b.innerHTML='<i>'+L[i]+'</i>';const sp=document.createElement('span');sp.textContent=o.t;b.appendChild(sp);
+  b.onclick=()=>{
+   [...$('opts').children].forEach((x,j)=>{x.disabled=true;if(o.ok&&ops[j].ok)x.classList.add('ok')});
+   done++;if(o.ok){score++;$('fb').textContent='🎉 ¡Correcto! Ganaste el tesoro';$('fb').style.color='#2f9e63'}
+   else{b.classList.add('bad');$('fb').textContent='❌ Incorrecto. ¡Mejor suerte la próxima!';$('fb').style.color='#d64541'}
+   upd();$('nx').hidden=false};
+  $('opts').appendChild(b)});
+ $('qc').classList.add('show');$('ch').classList.add('q');setTimeout(()=>$('qc').classList.add('front'),1000)}
+function next(){
+ left=left.filter(i=>i!=cur);
+ if(!left.length||!qs.length){$('fin').textContent='Aciertos: '+score+' de '+done+'. ¡Buen trabajo, tripulación!';show('s4');return}
+ round()}
+</script></body></html>
