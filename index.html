@@ -410,7 +410,7 @@ function openC(b){
  const c=$('ch'),empty=!ctype[[...c.children].indexOf(b)];
  c.classList.add('picked');b.classList.add('sel');SFX.creak(.6);[...c.children].forEach(x=>x.disabled=true);$('ban2').textContent='';
  setTimeout(()=>{b.classList.add('shake');SFX.rattle()},600);
- if(empty){setTimeout(()=>{b.classList.remove('shake');krakenAttack(b,()=>{$('ban2').textContent='🐙 ¡El Kraken se llevó el tesoro! Cofre vacío…';$('ne').hidden=false})},1200);return}
+ if(empty){setTimeout(()=>{b.classList.remove('shake');krakenAttack(b,()=>{$('ban2').textContent='🐙 ¡El Kraken se llevó el tesoro!';$('ne').hidden=false})},1200);return}
  setTimeout(()=>{b.classList.remove('shake');b.classList.add('open');SFX.chestOpen();burst(b,['✨','🪙','⭐','💰'])},1250);
  setTimeout(question,2300)}
 function question(){
