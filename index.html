@@ -89,8 +89,8 @@ button:disabled{opacity:.55;cursor:default}
 #kk{position:fixed;inset:0;z-index:50;pointer-events:none;background:rgba(4,16,26,0);transition:background .6s;overflow:hidden}
 #kk.on{background:rgba(3,12,20,.62)}
 #kk.rage{background:rgba(70,3,12,.62)}
-#kk>svg,#kg,#kg>svg,#ft,#ft>svg{position:absolute;inset:0;width:100%;height:100%}
-#kg{will-change:transform}
+#kk>svg,#kg,#kg>svg,#rw,#rw>svg,#ft,#ft>svg{position:absolute;inset:0;width:100%;height:100%}
+#kg{will-change:transform}#rw{position:absolute;inset:0;will-change:transform;backface-visibility:hidden}
 #kk .tb{fill:#3b1457;stroke:#0b0212;stroke-width:3;stroke-linejoin:round}
 #kk .th{fill:#a46be0;opacity:.3}
 #kk .so{fill:#f0b5cf;stroke:#6b1e4a;stroke-width:1}
@@ -236,7 +236,7 @@ const SFX=(()=>{
  wrong:()=>{tone(220,.6,{to:105,type:'sawtooth',v:.16,lp:800,det:-8,rv:.15});tone(233,.6,{to:110,type:'sawtooth',v:.14,lp:800,det:8});tone(130,.5,{to:50,v:.3,at:.05});noise(.15,{f:400,v:.1})},
  whoosh:(d=.5)=>{noise(d,{type:'bandpass',f:350,to:2600,q:1.5,v:.08,a:d*.4,pan:-.5});noise(d,{type:'bandpass',f:500,to:3200,q:1.5,v:.05,a:d*.4,pan:.5,at:.04})},
  rise:()=>{tone(40,3,{type:'sawtooth',v:.24,lp:120,a:1.5,am:7,amd:.4});tone(42,3,{type:'sawtooth',v:.18,lp:120,a:1.5,det:12});tone(28,3,{v:.3,a:1.6});
-  noise(2.8,{f:150,to:1100,v:.22,a:1.4,pan:-.3});noise(2.8,{f:180,to:900,v:.15,a:1.4,pan:.3,at:.1});bubbles(12,.2,.18,.08)},
+  noise(2.8,{f:150,to:1100,v:.22,a:1.4,pan:-.3});noise(2.8,{f:180,to:900,v:.15,a:1.4,pan:.3,at:.1});setTimeout(()=>bubbles(10,.1,.2,.08),120)},
  growl:()=>{tone(72,1.5,{to:46,type:'sawtooth',v:.3,lp:420,a:.18,am:22,amd:.7,dist:1,vib:3,rv:.2});tone(76,1.5,{to:48,type:'sawtooth',v:.2,lp:380,a:.18,det:15,am:19,amd:.6});
   noise(1.5,{type:'bandpass',f:450,to:900,q:3,v:.13,a:.2,am:20,amd:.6});tone(35,1.5,{v:.3,a:.2})},
  slime:d=>{noise(d,{f:280,v:.05,a:.5});for(let i=0;i<d*6;i++){const f=250+R()*900;noise(.16,{type:'bandpass',f,to:f*(R()>.5?.4:2),q:8,v:.1,at:i*.17+R()*.1,pan:(R()*2-1)*.6,rv:.15})}bubbles(Math.floor(d*3),.1,.3,.05)},
@@ -386,20 +386,20 @@ function krakenAttack(b,done){
  const fin=s=>`<path class="fn" d="M${cx+s*hw*.26} ${yt+hw*.32}L${cx+s*hw*.98} ${yt+hw*.02}L${cx+s*hw*.74} ${yt+hw*.38}L${cx+s*hw*.95} ${yt+hw*.62}L${cx+s*hw*.5} ${yt+hw*.74}Z"/>`,
  spike=(x,y,h,t)=>`<path class="fn" d="M${x-hw*.03} ${y}L${x+t} ${y-h}L${x+hw*.03} ${y}Z"/>`,
  wave=(y0,c)=>{let d='M-240 '+(H+30)+'V'+y0;for(let x=-240;x<W+240;x+=120)d+=' q30 -24 60 0 t60 0';return `<path class="${c}" d="${d}V${H+30}Z"/>`},vb=`viewBox="0 0 ${W} ${H}"`;
- k.innerHTML=`<div id="kg"><svg ${vb}><defs><radialGradient id="kh" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="#4a1c66"/><stop offset="1" stop-color="#0a0210"/></radialGradient><radialGradient id="ir"><stop offset="0" stop-color="#fff2a0"/><stop offset=".5" stop-color="#ffb520"/><stop offset="1" stop-color="#d4381c"/></radialGradient><radialGradient id="gl"><stop offset="0" stop-color="#ff2a1a" stop-opacity=".6"/><stop offset="1" stop-color="#ff2a1a" stop-opacity="0"/></radialGradient></defs>
-<g id="rs" style="transform:translateY(${H}px)">${bk}${fin(-1)}${fin(1)}${spike(cx,yt+hw*.03,hw*.15,0)}${spike(cx-hw*.12,yt+hw*.06,hw*.1,-hw*.03)}${spike(cx+hw*.12,yt+hw*.06,hw*.1,hw*.03)}<path class="hd" d="M${cx-hw*.52} ${H+120}C${cx-hw*.66} ${yt+hw*.6},${cx-hw*.4} ${yt+hw*.12},${cx} ${yt}C${cx+hw*.4} ${yt+hw*.12},${cx+hw*.66} ${yt+hw*.6},${cx+hw*.52} ${H+120}Z"/>${spots}
+ k.innerHTML=`<div id="kg"><div id="rw" style="transform:translate3d(0,${H}px,0)"><svg ${vb}><defs><radialGradient id="kh" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="#4a1c66"/><stop offset="1" stop-color="#0a0210"/></radialGradient><radialGradient id="ir"><stop offset="0" stop-color="#fff2a0"/><stop offset=".5" stop-color="#ffb520"/><stop offset="1" stop-color="#d4381c"/></radialGradient><radialGradient id="gl"><stop offset="0" stop-color="#ff2a1a" stop-opacity=".6"/><stop offset="1" stop-color="#ff2a1a" stop-opacity="0"/></radialGradient></defs>
+<g id="rs">${bk}${fin(-1)}${fin(1)}${spike(cx,yt+hw*.03,hw*.15,0)}${spike(cx-hw*.12,yt+hw*.06,hw*.1,-hw*.03)}${spike(cx+hw*.12,yt+hw*.06,hw*.1,hw*.03)}<path class="hd" d="M${cx-hw*.52} ${H+120}C${cx-hw*.66} ${yt+hw*.6},${cx-hw*.4} ${yt+hw*.12},${cx} ${yt}C${cx+hw*.4} ${yt+hw*.12},${cx+hw*.66} ${yt+hw*.6},${cx+hw*.52} ${H+120}Z"/>${spots}
 <g class="eyes">${eyes}</g>
-<g class="maw"><path class="mo" d="M${A}Q${Ct} ${B}Q${Cb} ${A}Z"/><path class="tt" d="${teeth}"/></g></g><g id="gb"></g></svg>
+<g class="maw"><path class="mo" d="M${A}Q${Ct} ${B}Q${Cb} ${A}Z"/><path class="tt" d="${teeth}"/></g></g></svg></div><svg ${vb}><g id="gb"></g></svg>
 <div id="ft" style="transform-origin:${cx}px ${cy}px"><div class="cc chest" style="left:${cr.left}px;top:${cr.top}px;width:${cw}px">${sv.outerHTML}</div>
 <svg ${vb}><defs><clipPath id="cp"><rect x="0" y="${ct-2}" width="${W}" height="${H}"/></clipPath></defs><g id="gf" clip-path="url(#cp)"></g></svg></div></div>
 <svg ${vb}><g class="wv">${wave(H-46,'w2')}</g><g class="wv" style="animation-direction:reverse">${wave(H-26,'w1')}</g></svg>`;
  SFX.duck(true);document.body.appendChild(k);b.style.visibility='hidden';
- const rs=k.querySelector('#rs'),kg=k.querySelector('#kg'),ft=k.querySelector('#ft'),gb=k.querySelector('#gb'),gf=k.querySelector('#gf'),T=[];
+ const rs=k.querySelector('#rw'),kg=k.querySelector('#kg'),ft=k.querySelector('#ft'),gb=k.querySelector('#gb'),gf=k.querySelector('#gf'),T=[];
  for(const s of [-1,1])for(const v of [0]){const yo=v*ch*.3;
   T.push({t:wrap(spl([[cx+s*hw*.95,H+60],[cx+s*cw*.95,cb+ch*.5],[cx+s*cw*.62,cy+ch*.1],[cx+s*cw*.22,cy-ch*.12],[cx-s*cw*.02,ct-ch*.2],[cx-s*cw*.38,ct-ch*.08],[cx-s*cw*.32,ct+ch*.22+yo],[cx+s*cw*.05,cy+ch*.12+yo],[cx+s*cw*.3,cb-ch*.14+yo*.3]],12),cw*.3,s,48,gb,gf),d:v*500+(s>0?250:0)})}
  const ease=p=>p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
  setTimeout(()=>{SFX.slime(2.8);const t0=performance.now();(function f(t){if(!k.isConnected)return;let all=1;T.forEach(o=>{const p=Math.max(0,Math.min(1,(t-t0-o.d)/2600));if(p<1)all=0;o.t.draw(ease(p)*(o.t.N-1))});if(!all)requestAnimationFrame(f)})(t0)},1700);
- setTimeout(()=>{SFX.rise();k.classList.add('on');rs.style.transition='transform 1.8s cubic-bezier(.2,.9,.3,1)';rs.style.transform='none'},60);
+ setTimeout(()=>{SFX.rise();k.classList.add('on');rs.style.transition='transform 1.8s cubic-bezier(.2,.9,.3,1)';rs.style.transform='translate3d(0,0,0)'},60);
  setTimeout(()=>{k.classList.add('look');SFX.growl()},1200);
  setTimeout(()=>{k.classList.add('rage');SFX.roar();$('ban2').textContent='🐙 ¡El Kraken atrapó el cofre!'},4900);
  setTimeout(()=>{SFX.sink();kg.style.transition='transform 2.4s ease-in';kg.style.transform='translateY('+(H-Math.min(yt-hw*.2,H-hw*1.2)+20)+'px)';
@@ -410,7 +410,7 @@ function openC(b){
  const c=$('ch'),empty=!ctype[[...c.children].indexOf(b)];
  c.classList.add('picked');b.classList.add('sel');SFX.creak(.6);[...c.children].forEach(x=>x.disabled=true);$('ban2').textContent='';
  setTimeout(()=>{b.classList.add('shake');SFX.rattle()},600);
- if(empty){setTimeout(()=>{b.classList.remove('shake');krakenAttack(b,()=>{$('ban2').textContent='🐙 ¡El Kraken se llevó el tesoro!';$('ne').hidden=false})},1200);return}
+ if(empty){setTimeout(()=>{b.classList.remove('shake');krakenAttack(b,()=>{$('ban2').textContent='🐙 ¡El Kraken se llevó el tesoro! Cofre vacío…';$('ne').hidden=false})},1200);return}
  setTimeout(()=>{b.classList.remove('shake');b.classList.add('open');SFX.chestOpen();burst(b,['✨','🪙','⭐','💰'])},1250);
  setTimeout(question,2300)}
 function question(){
